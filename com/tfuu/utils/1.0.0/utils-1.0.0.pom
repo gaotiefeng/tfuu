@@ -24,13 +24,13 @@
     </dependency>
 </dependencies>
 
-    <distributionManagement>
+<!--    <distributionManagement>
         <repository>
             <id>github</id>
             <name>utils</name>
             <url>https://maven.pkg.github.com/gaotiefeng/tfuu</url>
         </repository>
-    </distributionManagement>
+    </distributionManagement>-->
 
     <build>
             <plugins>

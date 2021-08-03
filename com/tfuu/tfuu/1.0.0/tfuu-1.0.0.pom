@@ -14,15 +14,15 @@
         <maven.compiler.target>11</maven.compiler.target>
     </properties>
 
-<dependencies>
-    <!-- 发布到服务器插件的依赖包 -->
+<!--<dependencies>
+    &lt;!&ndash; 发布到服务器插件的依赖包 &ndash;&gt;
     <dependency>
         <groupId>com.github.github</groupId>
         <artifactId>site-maven-plugin</artifactId>
         <version>0.11</version>
         <type>maven-plugin</type>
     </dependency>
-</dependencies>
+</dependencies>-->
 
     <build>
             <plugins>

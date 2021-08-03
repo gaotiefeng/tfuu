@@ -20,8 +20,23 @@ public class AppResult <T> implements Serializable {
             this.desc = desc;
         }
 
+        public AppResult(ResultType resultType) {
+            autoSetResultType(resultType);
+        }
+
+        public AppResult(ResultType resultType,T data) {
+            autoSetResultType(resultType);
+            this.data = data;
+        }
+
         public AppResult(T data){
             this.data = data;
+        }
+
+        public final void autoSetResultType(ResultType resultType) {
+            setCode(resultType.getCode());
+            setDesc(resultType.getDesc());
+            setInfo(resultType.getInfo());
         }
 
         public int getCode() {

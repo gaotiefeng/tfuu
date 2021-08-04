@@ -1,5 +1,7 @@
 package com.tfuu.core.model;
 
+import com.tfuu.core.constant.DefaultResultType;
+
 import java.io.Serializable;
 import java.util.Map;
 
@@ -91,28 +93,19 @@ public class AppResult <T> implements Serializable {
         }
         //成功的静态方法
         public static AppResult ok(){
-            AppResult r = new AppResult();
-            r.setCode(200);
-            r.setInfo("SUCCESS");
-            r.setDesc("ok");
-            return r;
+            return  new AppResult(DefaultResultType.ok);
         }
 
         //成功的静态方法
         public static <T> AppResult <T> ok(T data){
-            AppResult r = new AppResult();
-            r.setCode(200);
-            r.setInfo("SUCCESS");
-            r.setDesc("ok");
+            AppResult r = new AppResult(DefaultResultType.ok);
             r.setData(data);
             return r;
         }
         //成功的静态方法
         public static AppResult ok(String info, Map<String, Object> data)
         {
-            AppResult res = new AppResult();
-            res.setCode(200);
-            res.setDesc("ok");
+            AppResult res = new AppResult(DefaultResultType.ok);
             res.setInfo(info);
             res.setData(data);
 
@@ -122,10 +115,7 @@ public class AppResult <T> implements Serializable {
         //成功的静态方法
         public static AppResult ok(String  data)
         {
-            AppResult res = new AppResult();
-            res.setCode(200);
-            res.setDesc("ok");
-            res.setInfo("success");
+            AppResult res = new AppResult(DefaultResultType.ok);
             res.setData(data);
 
             return res;
@@ -134,9 +124,7 @@ public class AppResult <T> implements Serializable {
         //成功的静态方法
         public static <T> AppResult <T> ok(String info, T data)
         {
-            AppResult res = new AppResult();
-            res.setCode(200);
-            res.setDesc("ok");
+            AppResult res = new AppResult(DefaultResultType.ok);
             res.setInfo(info);
             res.setData(data);
 
@@ -145,13 +133,14 @@ public class AppResult <T> implements Serializable {
 
         //失败的静态方法
         public static AppResult error(){
-            AppResult r = new AppResult();
-            r.setCode(r.code);
-            r.setDesc(r.desc);
-            r.setInfo(r.info);
-            r.setData(r.data);
-            return r;
+            return  new AppResult(DefaultResultType.reqTimeOut);
         }
+
+        //失败的静态方法
+        public static AppResult error(ResultType resultType){
+            return new AppResult(resultType);
+        }
+
         //失败的静态方法
         public static AppResult error(int code){
             AppResult r = new AppResult();
@@ -163,40 +152,18 @@ public class AppResult <T> implements Serializable {
         }
 
         //失败的静态方法
-        public static AppResult error(int code,String info){
-            AppResult r = new AppResult();
-            r.setCode(code);
-            String desc = getDesc(code);
-            r.setDesc(desc);
+        public static AppResult error(ResultType resultType,String info){
+            AppResult r = new AppResult(resultType);
             r.setInfo(info);
             return r;
         }
 
         //失败的静态方法
-        public static <T>AppResult<T> error(int code,String info,T data){
-            AppResult r = new AppResult();
-            r.setCode(code);
+        public static <T>AppResult<T> error(ResultType resultType,String info,T data){
+            AppResult r = new AppResult(resultType);
             r.setInfo(info);
             r.setData(data);
-            String desc = getDesc(code);
-            r.setDesc(desc);
             return r;
-        }
-
-        public static String getDesc(int code)
-        {
-            String desc = "SYSTEM_CALL_FALED";
-            if (code == 400) {
-                desc = "INPUT_VALIDATE_FAILED";
-            }else if (code == 401) {
-                desc = "INPUT_VALIDATE_FAILED";
-            }else if (code == 403) {
-                desc = "RESOURCE_FORBIDDEN";
-            }else if (code == 404) {
-                desc = "RESOURCE_NOT_FOUND";
-            }
-
-            return desc;
         }
 
 }

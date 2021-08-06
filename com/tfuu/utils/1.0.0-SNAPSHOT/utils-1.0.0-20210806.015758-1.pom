@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.tfuu</groupId>
+    <artifactId>utils</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <properties>
+        <github.global.server>github</github.global.server>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+    </properties>
+
+<dependencies>
+   <!--//发布到服务器插件的依赖包 -->
+    <!--<dependency>
+        <groupId>com.github.github</groupId>
+        <artifactId>site-maven-plugin</artifactId>
+        <version>0.12</version>
+        <type>maven-plugin</type>
+    </dependency>-->
+    <!--@Nullable-->
+    <dependency>
+        <groupId>com.google.code.findbugs</groupId>
+        <artifactId>jsr305</artifactId>
+        <version>3.0.2</version>
+    </dependency>
+
+    <!--工具包-->
+    <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>2.12.4</version>
+    </dependency>
+
+    <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-core</artifactId>
+        <version>2.12.4</version>
+    </dependency>
+
+    <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-annotations</artifactId>
+        <version>2.12.4</version>
+    </dependency>
+    <!--工具包-->
+
+    <!--    mybatis-plus启动器    -->
+    <dependency>
+        <groupId>com.baomidou</groupId>
+        <artifactId>mybatis-plus-boot-starter</artifactId>
+        <version>3.4.1</version>
+    </dependency>
+
+</dependencies>
+
+<!--    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>utils</name>
+            <url>https://maven.pkg.github.com/gaotiefeng/tfuu</url>
+        </repository>
+    </distributionManagement>-->
+
+    <build>
+            <plugins>
+                <plugin>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>2.8.2</version>
+                    <configuration>
+                        <altDeploymentRepository>internal.repo::default::file://${project.build.directory}/mvn-repo</altDeploymentRepository>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>com.github.github</groupId>
+                    <artifactId>site-maven-plugin</artifactId>
+                    <version >0.12</version>
+                    <configuration>
+                        <message >Maven artifacts for ${project.version}</message>
+                        <noJekyll>true</noJekyll>
+                        <outputDirectory>${project.build.directory}/mvn-repo</outputDirectory><!--本地jar地址-->
+                        <branch>refs/heads/mvn-repo</branch><!--分支的名称-->
+                        <merge>true</merge>
+                        <includes>
+                            <include>**/*</include>
+                        </includes>
+                        <repositoryName>tfuu</repositoryName><!--对应github上创建的仓库名称 name-->
+                        <repositoryOwner>gaotiefeng</repositoryOwner><!--github 仓库所有者即登录用户名-->
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>site</goal>
+                            </goals>
+                            <phase>deploy</phase>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+
+    </build>
+
+</project>

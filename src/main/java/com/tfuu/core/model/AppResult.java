@@ -1,169 +1,169 @@
 package com.tfuu.core.model;
 
-import com.tfuu.core.constant.DefaultResultType;
+import com.tfuu.core.type.DefaultResultType;
+import com.tfuu.core.type.ResultType;
 
 import java.io.Serializable;
 import java.util.Map;
 
-public class AppResult <T> implements Serializable {
+public class AppResult<T> implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    private int code = 500;
+    private String desc;
+    private String info;
+    private long ts = System.currentTimeMillis() / 1000L;
     
-        private static final long serialVersionUID = 1L;
-        private int code = 500;
-        private String desc = "SYSTEM_CALL_FALED";
-        private String info = "网络延迟,请稍后！";
-        private long ts = System.currentTimeMillis() / 1000L;
+    private T data;
 
-        private T data;
+    public AppResult(){}
 
-        public AppResult(){}
+    public AppResult(int code, String info){
+        this.code = code;
+        this.info = info;
+    }
 
-        public AppResult(int code, String desc){
-            this.code = code;
-            this.desc = desc;
-        }
+    public AppResult(T data, ResultType type) {
+        setData(data);
+        autoSetResultType(type);
+    }
 
-        public AppResult(ResultType resultType) {
-            autoSetResultType(resultType);
-        }
+    public AppResult(ResultType type) {
+        autoSetResultType(type);
+    }
 
-        public AppResult(ResultType resultType,T data) {
-            autoSetResultType(resultType);
-            this.data = data;
-        }
+    public AppResult(T data){
+        this.data = data;
+    }
 
-        public AppResult(T data){
-            this.data = data;
-        }
+    public int getCode() {
+        return code;
+    }
 
-        public final void autoSetResultType(ResultType resultType) {
-            setCode(resultType.getCode());
-            setDesc(resultType.getDesc());
-            setInfo(resultType.getInfo());
-        }
+    public void setCode(int code) {
+        this.code = code;
+    }
 
-        public int getCode() {
-            return code;
-        }
+    public void setTs(long ts) {
+        this.ts = ts;
+    }
 
-        public void setCode(int code) {
-            this.code = code;
-        }
+    public long getTs() {
+        return ts;
+    }
 
-        public void setTs(long ts) {
-            this.ts = ts;
-        }
+    public String getDesc() {
+        return desc;
+    }
 
-        public long getTs() {
-            return ts;
-        }
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
 
-        public String getDesc() {
-            return desc;
-        }
+    public String getInfo() {
+        return info;
+    }
 
-        public void setDesc(String desc) {
-            this.desc = desc;
-        }
+    public void setInfo(String info) {
+        this.info = info;
+    }
 
-        public String getInfo() {
-            return info;
-        }
+    public T getData() {
+        return data;
+    }
 
-        public void setInfo(String info) {
-            this.info = info;
-        }
+    public void setData(T data) {
+        this.data = data;
+    }
 
-        public T getData() {
-            return data;
-        }
+    public final void autoSetResultType(ResultType resultType) {
+        setCode(resultType.getCode());
+        setDesc(resultType.getDesc());
+        setInfo(resultType.getInfo());
+    }
 
-        public void setData(T data) {
-            this.data = data;
-        }
+    @Override
+    public String toString() {
+        return "Result{" +
+                "code=" + code +
+                ", ts=" + ts + '\'' +
+                ", desc='" + desc + '\'' +
+                ", info='" + info + '\'' +
+                ", data=" + data +
+                '}';
+    }
+    //成功的静态方法
+    public static AppResult ok(){
+        return new AppResult(DefaultResultType.ok);
+    }
 
-        @Override
-        public String toString() {
-            return "AppResult{" +
-                    "code=" + code +
-                    ", ts=" + ts + '\'' +
-                    ", desc='" + desc + '\'' +
-                    ", info='" + info + '\'' +
-                    ", data=" + data +
-                    '}';
-        }
-        //成功的静态方法
-        public static AppResult ok(){
-            return  new AppResult(DefaultResultType.ok);
-        }
+    //成功的静态方法
+    public static <T> AppResult<T> ok(T data){
+        AppResult r = new AppResult(DefaultResultType.ok);
+        r.setData(data);
+        return r;
+    }
+    //成功的静态方法
+    public static AppResult ok(String info, Map<String, Object> data)
+    {
+        AppResult res = new AppResult(DefaultResultType.ok);
+        res.setInfo(info);
+        res.setData(data);
 
-        //成功的静态方法
-        public static <T> AppResult <T> ok(T data){
-            AppResult r = new AppResult(DefaultResultType.ok);
-            r.setData(data);
-            return r;
-        }
-        //成功的静态方法
-        public static AppResult ok(String info, Map<String, Object> data)
-        {
-            AppResult res = new AppResult(DefaultResultType.ok);
-            res.setInfo(info);
-            res.setData(data);
+        return res;
+    }
 
-            return res;
-        }
+    //成功的静态方法
+    public static AppResult ok(String  data)
+    {
+        AppResult res = new AppResult(DefaultResultType.ok);
+        res.setData(data);
 
-        //成功的静态方法
-        public static AppResult ok(String  data)
-        {
-            AppResult res = new AppResult(DefaultResultType.ok);
-            res.setData(data);
+        return res;
+    }
 
-            return res;
-        }
+    //成功的静态方法
+    public static <T> AppResult<T> ok(String info, T data)
+    {
+        AppResult res = new AppResult(DefaultResultType.ok);
+        res.setInfo(info);
+        res.setData(data);
 
-        //成功的静态方法
-        public static <T> AppResult <T> ok(String info, T data)
-        {
-            AppResult res = new AppResult(DefaultResultType.ok);
-            res.setInfo(info);
-            res.setData(data);
+        return res;
+    }
 
-            return res;
-        }
+    //失败的静态方法
+    public static AppResult error(){
+        AppResult r = new AppResult(DefaultResultType.appError);
+        return r;
+    }
 
-        //失败的静态方法
-        public static AppResult error(){
-            return  new AppResult(DefaultResultType.reqTimeOut);
-        }
+    //失败的静态方法
+    public static AppResult error(ResultType resultType){
+        AppResult r = new AppResult(resultType);
+        return r;
+    }
 
-        //失败的静态方法
-        public static AppResult error(ResultType resultType){
-            return new AppResult(resultType);
-        }
+    //失败的静态方法
+    public static AppResult error(String info){
+        AppResult r = new AppResult(DefaultResultType.appError);
+        r.setInfo(info);
+        return r;
+    }
 
-        //失败的静态方法
-        public static AppResult error(int code){
-            AppResult r = new AppResult();
-            r.setCode(code);
-            r.setDesc(r.desc);
-            r.setInfo(r.info);
-            r.setData(r.data);
-            return r;
-        }
+    //失败的静态方法
+    public static <T> AppResult<T> error(ResultType resultType, String info, T data){
+        AppResult r = new AppResult(resultType);
+        r.setInfo(info);
+        r.setData(data);
+        return r;
+    }
 
-        //失败的静态方法
-        public static AppResult error(ResultType resultType,String info){
-            AppResult r = new AppResult(resultType);
-            r.setInfo(info);
-            return r;
-        }
-
-        //失败的静态方法
-        public static <T>AppResult<T> error(ResultType resultType,String info,T data){
-            AppResult r = new AppResult(resultType);
-            r.setInfo(info);
-            r.setData(data);
-            return r;
-        }
+    //失败 枚举类
+    public static <T> AppResult<T> error(ResultType resultType, String info){
+        AppResult r = new AppResult(resultType);
+        r.setInfo(info);
+        return r;
+    }
 
 }

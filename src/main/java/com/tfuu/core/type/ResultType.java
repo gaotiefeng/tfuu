@@ -1,4 +1,4 @@
-package com.tfuu.core.model;
+package com.tfuu.core.type;
 
 import com.tfuu.core.utils.StringUtils;
 
@@ -45,4 +45,3 @@ public interface ResultType {
     }
 
 }
-

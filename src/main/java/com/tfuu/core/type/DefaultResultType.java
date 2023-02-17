@@ -1,7 +1,4 @@
-package com.tfuu.core.constant;
-
-
-import com.tfuu.core.model.ResultType;
+package com.tfuu.core.type;
 
 /**
  * 描述：系统缺省的结果类型
@@ -58,4 +55,3 @@ public enum DefaultResultType implements ResultType {
     }
 
 }
-
